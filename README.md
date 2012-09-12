@@ -5,6 +5,10 @@ This also allows you to avoid custom class creation and put the drawing calls wh
 
 MCCCell is Key-Value Coding compliant so that exchanging data between the UITableView datasource/delegate and the drawBlock is easy.
 
+## Dependency
+
+MCCCell depends on MCCView which you can find here: https://github.com/Orion98MC/MCCView
+
 ## Example
 
 ```objective-c
