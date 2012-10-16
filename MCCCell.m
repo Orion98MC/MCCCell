@@ -7,6 +7,8 @@
 
 #import "MCCCell.h"
 
+//#define DEBUG_MCCCell
+
 @interface MCCCell ()
 @property (retain, nonatomic) NSMutableDictionary *userInfo;
 @property (retain, nonatomic) MCCView *customContentView;
@@ -23,10 +25,10 @@
   self.userInfo = [NSMutableDictionary dictionary];
 
   /* Add the custom content view that will draw the content of the cell using a block */
-  __block typeof (self) _self = self;
+  __block typeof (self) __self = self;
   self.customContentView = [[[MCCView alloc]initWithFrame:self.bounds]autorelease];
   customContentView.drawBlock = ^void(id _customContentView, CGRect rect){
-    block(_self, rect);
+    block(__self, rect);
   };
   customContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   customContentView.opaque = YES;
@@ -40,6 +42,9 @@
 }
 
 - (void)dealloc {
+#ifdef DEBUG_MCCCell
+  NSLog(@"dealloc %@", NSStringFromClass([self class]));
+#endif
   self.customContentView = nil;
   self.userInfo = nil;
   [super dealloc];
@@ -53,6 +58,11 @@
   if (customContentView && customContentView.opaque) {
     [customContentView setBackgroundColor:backgroundColor];
   }
+}
+
+- (void)setNeedsDisplay {
+  [super setNeedsDisplay];
+  [customContentView setNeedsDisplay];
 }
 
 - (void)setNeedsDisplayInRect:(CGRect)rect {
