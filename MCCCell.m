@@ -17,12 +17,20 @@
 @implementation MCCCell
 @synthesize userInfo, customContentView;
 
-- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier drawBlock:(void(^)(id, CGRect))block {
-  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (!self) return nil;
-  
+
   /* Key-Value Coding storage */
   self.userInfo = [NSMutableDictionary dictionary];
+  
+  return self;
+}
+
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier drawBlock:(void(^)(id, CGRect))block {
+  self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+  if (!self) return nil;
+  
 
   /* Add the custom content view that will draw the content of the cell using a block */
   __block typeof (self) __self = self;
